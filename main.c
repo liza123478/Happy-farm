@@ -26,9 +26,15 @@ int main()
     int current_hour = 8;
     int choice;
     int work_hours;
+    int slot_index, item_id, i;
+
+    const char* item_names[ITEMS_COUNT] = {
+        "Пусто", "Дерево", "Камень", "Семена", "Вода",
+        "Морковь", "Сено", "Верёвка", "Удочка", "Мотыга"
+    };
 
     int inventory[INVENTORY_SIZE] = {
-        ITEM_WOOD, ITEM_STONE, ITEM_EMPTY,
+        ITEM_EMPTY, ITEM_STONE, ITEM_WOOD,
         ITEM_WATER, ITEM_CARROT, ITEM_HOE,
         ITEM_SEEDS, ITEM_EMPTY, ITEM_ROD, ITEM_ROPE
     };
@@ -88,8 +94,72 @@ int main()
             break;
 
         case 3:
+            printf("\n--- Инвентарь ---\n");
+
+            for (i = 0; i < INVENTORY_SIZE; i++)
+            {
+                printf("Слот %d: [%d] (%s)\n",
+                    i, inventory[i], item_names[inventory[i]]);
+            }
+            break;
+
         case 4:
+            printf("Введите номер слота (0-9): ");
+
+            if (scanf("%d", &slot_index) != 1)
+            {
+                scanf("%*s");
+                printf("Ошибка! Введите число.\n");
+                break;
+            }
+
+            if (slot_index < 0 || slot_index >= INVENTORY_SIZE)
+            {
+                printf("Неверный номер слота!\n");
+                break;
+            }
+
+            printf("Введите ID предмета (0-9): ");
+
+            if (scanf("%d", &item_id) != 1)
+            {
+                scanf("%*s");
+                printf("Ошибка! Введите число.\n");
+                break;
+            }
+
+            if (item_id < 0 || item_id >= ITEMS_COUNT)
+            {
+                printf("Неверный ID предмета!\n");
+                break;
+            }
+
+            inventory[slot_index] = item_id;
+
+            printf("В слот %d помещен предмет: %s\n",
+                slot_index, item_names[item_id]);
+            break;
+
         case 5:
+            printf("Введите номер слота (0-9): ");
+
+            if (scanf("%d", &slot_index) != 1)
+            {
+                scanf("%*s");
+                printf("Ошибка! Введите число.\n");
+                break;
+            }
+
+            if (slot_index < 0 || slot_index >= INVENTORY_SIZE)
+            {
+                printf("Неверный номер слота!\n");
+                break;
+            }
+
+            inventory[slot_index] = ITEM_EMPTY;
+
+            printf("Слот %d очищен.\n", slot_index);
+            break;
         case 6:
             printf("Этот пункт пока не реализован.\n");
             break;
